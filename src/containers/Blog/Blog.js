@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 // import axios from 'axios';
-import { Route } from "react-router-dom";
+import { Route, NavLink } from "react-router-dom";
 
 import './Blog.css';
 import Posts from "./Posts/Posts";
 import NewPost from "./NewPost/NewPost";
-import Link from "react-router-dom/es/Link";
 
 class Blog extends Component {
     render () {
@@ -14,17 +13,29 @@ class Blog extends Component {
                 <header>
                     <nav>
                         <ul>
-                          <li><Link to="/">Home</Link></li>
-                          {/*<li><Link to="/new-post">New Post</Link></li>*/}
-                          <li><Link to={{
-                              pathname: "/new-post",
+                          <li><NavLink
+                            to="/"
+                            exact
+                            activeClassName="my-active"
+                            activeStyle={{
+                              color: "#fa923f",
+                              textDecoration: "underline"
+                            }}>Home</NavLink></li>
+                              {/*unique my-active name can be implemented */}
+                              {/*inline active style can be implemented */}
+                              {/*<li><Link to="/new-post">New Post</Link></li> // absolute path*/}
+                              {/*<li><Link to={props.match.url + "/new"}>New Post</Link></li> // relative path*/}
+                          <li><NavLink to={{
+                              pathname: "/new-post", // absolute path
+                              // pathname: this.props.match.url + "/new-post",
+                              // relative path appended to the current path [page url]
                               hash: "#submit",
                               search: "?quick-submit=true"
-                          }}>New Post</Link></li>
+                          }}>New Post</NavLink></li>
                         </ul>
                     </nav>
                 </header>
-{/*                <Route path="/" exact render={() => <h1>Home</h1>} />
+{/*             <Route path="/" exact render={() => <h1>Home</h1>} />
                 <Route path="/" render={() => <h1>Home 2</h1>} />*/}
                 <Route path="/" exact component={Posts} />
                 <Route path="/new-post" component={NewPost} />
