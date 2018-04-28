@@ -54,6 +54,7 @@ class Blog extends Component {
         <Switch>
           {this.state.auth ? <Route path="/new-post" component={NewPost} /> : null}
           <Route path="/posts" component={Posts} />
+          {/*<Route render={() => <h1>Not found</h1>} /> or create 404 page*/}  TODO create 404 page
           <Redirect from="/" to="/posts" />{" "}
           {/* Redirect can only use 'from' property inside a Switch statement */}
           {/*<Route path="/" component={Posts} /> // alternate route for Posts component */}
