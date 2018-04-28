@@ -50,8 +50,9 @@ class Blog extends Component {
         <Switch>
           <Route path="/new-post" component={NewPost} />
           <Route path="/posts" component={Posts} />
-          <Redirect from="/" to="/posts" />
-          {/*<Route path="/" component={Posts} />*/}
+          <Redirect from="/" to="/posts" />{" "}
+          {/* Redirect can only use 'from' property inside a Switch statement */}
+          {/*<Route path="/" component={Posts} /> // alternate route for Posts component */}
         </Switch>
       </div>
     );

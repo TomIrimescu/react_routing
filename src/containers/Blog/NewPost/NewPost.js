@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { Redirect } from "react-router-dom";
 
 import "./NewPost.css";
 
@@ -7,7 +8,8 @@ class NewPost extends Component {
   state = {
     title: "",
     content: "",
-    author: "Tomcat"
+    author: "Tomcat",
+    submitted: false // conditional redirect
   };
 
   componentDidMount() {
@@ -22,12 +24,21 @@ class NewPost extends Component {
     };
     axios.post("/posts", data).then(response => {
       console.log(response);
+      this.props.history.push("/posts"); // this will enable back button while changing page on stack
+      // this.props.history.replace("/posts"); // this will not enable back button
+      // this.setState({submitted: true}) // conditional redirect will not enable back button
     });
   };
 
   render() {
+    let redirect = null;
+    if (this.state.submitted) {
+      redirect = <Redirect to="/posts" />; // conditional redirect
+    }
+
     return (
       <div className="NewPost">
+        {redirect} {/* conditional redirect */}
         <h1>Add a Post</h1>
         <label>Title</label>
         <input
