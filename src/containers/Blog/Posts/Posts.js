@@ -11,55 +11,59 @@ class Posts extends Component {
   state = {
     posts: []
   };
-  
-  componentDidMount () {
+
+  componentDidMount() {
     console.log(this.props);
-    axios.get( '/posts' )
-    .then( response => {
-      const posts = response.data.slice(0, 4);
-      const updatedPosts = posts.map(post => {
-        return {
-          ...post,
-          author: 'Max'
-        }
+    axios
+      .get("/posts")
+      .then(response => {
+        const posts = response.data.slice(0, 4);
+        const updatedPosts = posts.map(post => {
+          return {
+            ...post,
+            author: "Max"
+          };
+        });
+        this.setState({ posts: updatedPosts });
+        // console.log( response );
+      })
+      .catch(error => {
+        console.log(error);
+        // this.setState({error: true});
       });
-      this.setState({posts: updatedPosts});
-      // console.log( response );
-    } )
-    .catch(error => {
-      console.log(error);
-      // this.setState({error: true});
-    });
   }
-  
-  postSelectedHandler = (id) => {
+
+  postSelectedHandler = id => {
     // this.setState({selectedPostId: id}); // used with Link tag
     this.props.history.push("/posts/" + id); // programmatic navigation instead of Link
     // this.props.history.push({pathname: "/posts/" + id}); // alternative programmatic navigation
   };
-  
+
   render() {
-    let posts = <p style={{textAlign: 'center'}}>Something went wrong!</p>;
+    let posts = <p style={{ textAlign: "center" }}>Something went wrong!</p>;
     if (!this.state.error) {
       posts = this.state.posts.map(post => {
         return (
-      // <Link to={"/posts/" + post.id} key={post.id}>
-            <Post
-              key={post.id}
-              title={post.title}
-              author={post.author}
-              clicked={() => this.postSelectedHandler(post.id)} />
-      // </Link>
+          // <Link to={"/posts/" + post.id} key={post.id}>
+          <Post
+            key={post.id}
+            title={post.title}
+            author={post.author}
+            clicked={() => this.postSelectedHandler(post.id)}
+          />
+          // </Link>
         );
       });
     }
-    
+
     return (
       <div>
-        <section className="Posts">
-          {posts}
-        </section>
-        <Route path={this.props.match.url + '/:id'} exact component={FullPost} />
+        <section className="Posts">{posts}</section>
+        <Route
+          path={this.props.match.url + "/:id"}
+          exact
+          component={FullPost}
+        />
       </div>
     );
   }
